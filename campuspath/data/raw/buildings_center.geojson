@@ -1,0 +1,376 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-11-08T02:15:51Z",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "relation/13941206",
+      "properties": {
+        "@id": "relation/13941206",
+        "building": "university",
+        "name": "비전타워",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.127145,
+          37.449784
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "relation/13941207",
+      "properties": {
+        "@id": "relation/13941207",
+        "building": "university",
+        "name": "공과대학2",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1284897,
+          37.4492986
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "relation/13941208",
+      "properties": {
+        "@id": "relation/13941208",
+        "building": "yes",
+        "name": "바이오나노연구원",
+        "office": "research",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1280297,
+          37.4498188
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "relation/13941209",
+      "properties": {
+        "@id": "relation/13941209",
+        "building": "university",
+        "name": "한의과대학",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1285254,
+          37.4500525
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/621874243",
+      "properties": {
+        "@id": "way/621874243",
+        "building": "university",
+        "name": "학생회관",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1283704,
+          37.4581897
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041736171",
+      "properties": {
+        "@id": "way/1041736171",
+        "building": "university",
+        "name": "법과대학",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1273513,
+          37.449247
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041736196",
+      "properties": {
+        "@id": "way/1041736196",
+        "building": "university",
+        "building:levels": "12",
+        "height": "54",
+        "name": "가천관",
+        "start_date": "2014",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1297311,
+          37.450409
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041736203",
+      "properties": {
+        "@id": "way/1041736203",
+        "amenity": "library",
+        "building": "yes",
+        "name": "전자정보도서관",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1285592,
+          37.4506945
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755528",
+      "properties": {
+        "@id": "way/1041755528",
+        "building": "university",
+        "name": "공과대학1",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1281029,
+          37.4515664
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755529",
+      "properties": {
+        "@id": "way/1041755529",
+        "building": "university",
+        "name": "예술-체육대학2",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1296412,
+          37.4516835
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755530",
+      "properties": {
+        "@id": "way/1041755530",
+        "building": "university",
+        "name": "예술-체육대학1",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1293892,
+          37.452391
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755533",
+      "properties": {
+        "@id": "way/1041755533",
+        "building": "university",
+        "name": "대학원",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1300537,
+          37.4526917
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755534",
+      "properties": {
+        "@id": "way/1041755534",
+        "building": "university",
+        "name": "글로벌센터",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1271129,
+          37.4519405
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755557",
+      "properties": {
+        "@id": "way/1041755557",
+        "building": "university",
+        "name": "교육대학원",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1317897,
+          37.451805
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755558",
+      "properties": {
+        "@id": "way/1041755558",
+        "amenity": "library",
+        "building": "yes",
+        "name": "중앙도서관",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1330136,
+          37.4523096
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041755573",
+      "properties": {
+        "@id": "way/1041755573",
+        "building": "university",
+        "name": "학생회관",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1341921,
+          37.4530421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "relation/13942670",
+      "properties": {
+        "@id": "relation/13942670",
+        "building": "dormitory",
+        "name": "제2학생생활관",
+        "type": "multipolygon",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1341632,
+          37.4560862
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1024150463",
+      "properties": {
+        "@id": "way/1024150463",
+        "building": "school",
+        "name": "기숙사동",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1278097,
+          37.4580253
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041897770",
+      "properties": {
+        "@id": "way/1041897770",
+        "building": "dormitory",
+        "name": "제1학생생활관",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1351521,
+          37.4562836
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041897773",
+      "properties": {
+        "@id": "way/1041897773",
+        "building": "university",
+        "name": "IT융합대학",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1338791,
+          37.4553131
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/1041897774",
+      "properties": {
+        "@id": "way/1041897774",
+        "building": "dormitory",
+        "name": "제3학생생활관",
+        "@geometry": "center"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.1332666,
+          37.4557365
+        ]
+      }
+    }
+  ]
+}

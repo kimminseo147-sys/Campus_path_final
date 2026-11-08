@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>campus_path_final</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<noscript><div style="background:#C53030;color:#fff;padding:12px 16px;font-size:14px;line-height:1.5">이 화면에서는 자바스크립트가 꺼져 있어 버튼이 동작하지 않아요. 카카오톡·파일 미리보기 대신 Safari나 Chrome 브라우저로 열어주세요.</div></noscript>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M2 21 L9 11 L13 16 L18 7 L24 21 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="18" cy="7" r="2.2"/></svg>
+      <img class="wordmark" src="assets/campuspath-wordmark.svg" alt="CampusPath" width="3510" height="240">
+      <span class="brand-gachon"><img class="logo" src="assets/gachon-logo-white.png" alt="가천대학교" width="259" height="64"></span>
+    </div>
+    <nav class="tabs" aria-label="페이지">
+      <a href="#timetable" data-route="timetable">시간표 · 동선</a>
+      <a href="#credits" data-route="credits">졸업학점 계산기</a>
+    </nav>
+  </div>
+</header>
+<nav class="bnav" aria-label="페이지">
+  <a href="#timetable" data-route="timetable"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 7.5h15M7 3.5v14" stroke="currentColor" stroke-width="1.6"/></svg>시간표 · 동선</a>
+  <a href="#credits" data-route="credits"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 3a7 7 0 0 1 7 7h-7z" fill="currentColor"/></svg>졸업학점</a>
+</nav>
+
+<!-- ============ PAGE 1 ============ -->
+<main id="page-timetable" class="wrap">
+  <div class="page-head">
+    <div>
+      <h1>시간표 · 연강 이동 진단</h1>
+      <p>연강 사이 쉬는 시간 안에 다음 강의실까지 걸어갈 수 있는지, 경사까지 반영해 계산합니다.</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="btn-sample">예시 시간표 불러오기</button>
+      <button class="btn ghost" id="btn-clear">전체 비우기</button>
+    </div>
+  </div>
+
+  <section class="panel summary" aria-label="이번 학기 요약">
+    <div class="sm-l">
+      <div class="sm-line"><span>이 시간표로 <span class="num" id="sm-cr">0</span>학점</span><span>졸업까지 <span class="hl num" id="sm-rem">–</span></span></div>
+      <div class="pbar" aria-hidden="true"><i class="p1" id="sm-p1"></i><i class="p2" id="sm-p2"></i></div>
+      <div class="pkey"><span><i style="background:var(--accent)"></i>기이수 <b class="num" id="sm-done">0</b></span><span><i style="background:var(--accent-2)"></i>이번 학기 <b class="num" id="sm-now">0</b></span><span id="sm-track">전공심화 기준</span><a href="#credits" style="color:var(--accent);font-weight:600">학점 계산기 →</a></div>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="minis">
+      <div class="mini"><div class="eyebrow">주간 도보</div><div class="v" id="st-walk">0<small>분</small></div><div class="s">연강 구간 합계</div></div>
+      <div class="mini"><div class="eyebrow">위험 연강</div><div class="v" id="st-risk">0<small>구간</small></div><div class="s" id="st-risk-s">빠듯 0 · 여유 0</div></div>
+      <div class="mini"><div class="eyebrow">등반 고도</div><div class="v" id="st-climb">0<small>m</small></div><div class="s" id="st-grade">피로도 –</div></div>
+    </div>
+  </section>
+
+  <div class="tt-layout">
+    <section class="panel" aria-label="주간 시간표">
+      <div class="panel-h"><h2>주간 시간표</h2><span class="muted only-d" style="font-size:12px">배지를 누르면 아래 지도에서 해당 경로를 보여줍니다</span><button class="btn primary only-m" id="btn-open-add" type="button">+ 과목 추가</button></div>
+      <div class="tt-scroll"><div class="tt" id="tt"></div></div>
+    </section>
+
+    <aside class="stack">
+      <div class="backdrop" id="backdrop"></div>
+      <section class="panel add-panel" id="add-panel" aria-label="과목 추가">
+        <div class="sheet-h"><h2>과목 추가</h2><button class="btn ghost" type="button" id="btn-close-add" aria-label="닫기">닫기</button></div>
+        <div class="panel-h"><h2>과목 추가</h2></div>
+        <form class="panel-b form" id="f-course" novalidate>
+          <div class="row" style="grid-template-columns:1fr 72px">
+            <label>과목명<input class="inp" id="f-name" required placeholder="예: 생산관리" maxlength="30"></label>
+            <label>학점<input class="inp" type="number" id="f-cr" value="3" min="0" max="6"></label>
+          </div>
+          <div class="row">
+            <label>요일<select class="inp" id="f-day"></select></label>
+            <label>강의동<select class="inp" id="f-bld"></select></label>
+          </div>
+          <div class="row">
+            <label>시작<input class="inp" type="time" id="f-start" value="09:00" step="300"></label>
+            <label>종료<input class="inp" type="time" id="f-end" value="10:15" step="300"></label>
+          </div>
+          <div class="err" id="f-err" role="alert"></div>
+          <button class="btn primary" type="submit" style="justify-content:center">시간표에 추가</button>
+        </form>
+      </section>
+      <section class="panel panel-b stack" style="gap:12px">
+        <h3>연강 판정 기준</h3>
+        <div class="legend">
+          <div><span class="dot" style="background:var(--safe)"></span>여유 · 이동시간이 쉬는 시간의 60% 미만</div>
+          <div><span class="dot" style="background:var(--warn)"></span>빠듯 · 60~90%, 빠른 걸음 필요</div>
+          <div><span class="dot" style="background:var(--danger)"></span>위험 · 90% 이상, 지각 가능성 높음</div>
+          <div><span class="dot" style="background:var(--muted)"></span>공강 · 쉬는 시간 60분 이상</div>
+        </div>
+        <details class="how">
+          <summary>이동시간 계산 방식</summary>
+          <p>OpenStreetMap의 인도·계단·교내도로를 이어 건물 출입구 사이에서 가장 빨리 걸을 수 있는 길을 찾습니다. 구간마다 경사에 따라 Tobler 보행 함수 <code>v = 6·e<sup>−3.5|s+0.05|</sup> km/h</code>로 속도를 바꾸고, 계단은 더 느리게 계산하며, 건물 출입에 1분을 더합니다.</p>
+          <p>건물 위치는 OpenStreetMap 건물 중심점, 고도는 90m 격자 지형자료(Open-Meteo)로 대략값입니다. 코드 상단 <code>BUILDINGS</code>를 실측값으로 바꾸면 전체 계산에 바로 반영됩니다.</p>
+        </details>
+      </section>
+    </aside>
+  </div>
+
+  <section class="panel" id="map-sec" style="margin-top:16px" aria-label="캠퍼스 동선 지도">
+    <div class="panel-h">
+      <h2 id="map-title">월요일 이동 동선</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <div class="daytabs" id="daytabs" role="group" aria-label="요일 선택"></div>
+        <div class="seg" role="group" aria-label="지도 종류" id="base-seg">
+          <button data-base="map" aria-pressed="true">지도</button>
+          <button data-base="sat" aria-pressed="false">위성</button>
+        </div>
+      </div>
+    </div>
+    <div class="map-layout">
+      <div id="map" role="img" aria-label="캠퍼스 지도"></div>
+      <div class="route" id="route"></div>
+    </div>
+    <div class="map-note" id="map-note">건물·보행로: © OpenStreetMap contributors · 위성: Esri · 고도: Open-Meteo.</div>
+  </section>
+</main>
+
+<!-- ============ PAGE 2 ============ -->
+<main id="page-credits" class="wrap" hidden>
+  <div class="page-head">
+    <div>
+      <h1>잔여 졸업학점 계산기</h1>
+      <p>이수 트랙을 바꿔가며 졸업까지 남은 학점을 비교합니다. 성적표 파일을 올리거나 영역별 학점을 직접 입력하세요.</p>
+    </div>
+    <div class="seg" role="group" aria-label="이수 트랙" id="track-seg">
+      <button data-track="deep" aria-pressed="true">전공심화</button>
+      <button data-track="double" aria-pressed="false">복수전공</button>
+      <button data-track="minor" aria-pressed="false">부전공</button>
+    </div>
+  </div>
+
+  <div class="cr-layout">
+    <div class="stack">
+      <section class="panel">
+        <div class="panel-h"><h2>성적표 불러오기</h2></div>
+        <div class="panel-b stack" style="gap:10px">
+          <div class="drop" id="drop">
+            <div><b style="color:var(--ink)">포털 ‘기이수 성적조회’ 파일</b>을 끌어다 놓거나 선택하세요</div>
+            <div>xlsx · csv 지원 · 필요한 열: 과목명, 이수구분, 학점, 성적</div>
+            <div><label class="btn" for="file">파일 선택</label><input type="file" id="file" accept=".csv,.xlsx,.xls" hidden></div>
+          </div>
+          <label class="muted" style="font-size:12px;font-weight:600" for="paste">또는 성적표 표를 복사해서 붙여넣기 (탭·쉼표 구분)</label>
+          <textarea class="inp" id="paste" placeholder="과목명,이수구분,학점,성적&#10;생산관리,전필,3,A+"></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn primary" id="btn-parse">붙여넣은 내용 반영</button>
+            <button class="btn" id="btn-sample-cr">예시 성적표 넣기</button>
+          </div>
+          <div class="err" id="parse-msg" role="status" style="color:var(--muted)"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-h"><h2>영역별 이수 학점</h2><span class="muted" style="font-size:12px">직접 수정 가능</span></div>
+        <div class="panel-b credit-grid" id="credit-inputs"></div>
+      </section>
+    </div>
+
+    <div class="stack">
+      <section class="panel panel-b">
+        <div class="hero-rem">
+          <div class="ring" id="ring"></div>
+          <div class="rem-text">
+            <div class="eyebrow" id="rem-track">전공심화 트랙</div>
+            <div class="big" id="rem-big">졸업까지 –학점</div>
+            <p class="muted" id="rem-sub" style="margin:4px 0 0"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-h"><h2>요건별 달성률</h2></div>
+        <div class="panel-b reqs" id="reqs"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-h"><h2>미충족 요건</h2></div>
+        <div class="panel-b"><ul class="alerts" id="alerts"></ul></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-h"><h2>트랙별 비교</h2><span class="muted" style="font-size:12px">같은 이수 내역 기준</span></div>
+        <div class="tbl-scroll"><table class="cmp" id="cmp"></table></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-h"><h2>비학점 졸업요건</h2></div>
+        <div class="panel-b checks" id="checks"></div>
+      </section>
+
+      <details class="panel">
+        <summary class="panel-h" style="cursor:pointer;border-bottom:0"><h2>졸업 기준표 수정</h2><span class="muted" style="font-size:12px">현재 값은 예시입니다</span></summary>
+        <div class="panel-b stack" style="gap:10px;border-top:1px solid var(--line)">
+          <div class="note">학과·입학년도별 요람 기준으로 바꿔 쓰세요. 수정한 값은 이 브라우저에 저장됩니다.</div>
+          <div class="tbl-scroll"><table class="rules" id="rules"></table></div>
+          <div><button class="btn ghost" id="btn-rules-reset">예시 기준으로 되돌리기</button></div>
+        </div>
+      </details>
+    </div>
+  </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="js/data.js"></script>
+<script src="js/walknet.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
